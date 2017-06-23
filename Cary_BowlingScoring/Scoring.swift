@@ -11,10 +11,11 @@ import Foundation
 struct Frame {
     var first: Int
     var second: Int
+    var bonus: Int
     
     var total: Int {
         get {
-            return first + second
+            return first + second + bonus
         }
     }
     
@@ -33,34 +34,12 @@ struct Frame {
 
 class Scoring {
     func calcTotal(_ frames: [Frame]) -> Int {
-        var frameNumber: Int = 0
         var total: Int = 0
-        var previousWasSpare: Bool = false
-        var leftToCountForStrike: Int = 0
         
         for frame in frames {
-            frameNumber += 1
-            
             total += frame.total
-            
-            if frameNumber <= 10 {
-                if leftToCountForStrike > 0 {
-                    total += frame.total
-                }
-                
-                if previousWasSpare {
-                    total += frame.first
-                }
-            }
-            
-            if frame.isStrike {
-                leftToCountForStrike = 2
-            } else {
-                leftToCountForStrike -= 1
-            }
-            
-            previousWasSpare = frame.isSpare
-       }
+        }
+        
         return total
     }
 }
